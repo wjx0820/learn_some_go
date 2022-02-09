@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -16,7 +18,13 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 // Add a showSnippet handler function.
 func showSnippet(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Display a specific snippet..."))
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil || id < 1 {
+		http.NotFound(w, r)
+		return
+	}
+
+	fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
 }
 
 // Add a createSnippet handler function.
@@ -34,6 +42,8 @@ func createSnippet(w http.ResponseWriter, r *http.Request) {
 
 	// need explicitly set this header or it will fallback to text/plain
 	w.Header().Set("Content-Type", "application/json")
+	// suppressing system-generated headers
+	w.Header()["Date"] = nil
 	w.Write([]byte(`{"name":"Alex"}`))
 }
 
