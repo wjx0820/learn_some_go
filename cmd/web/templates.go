@@ -2,15 +2,18 @@ package main
 
 import (
 	"html/template"
+	"net/url"
 	"path/filepath"
 	"time"
 
 	"github.com/wjx0820/snippetbox/pkg/models"
 )
 
-// Add a CurrentYear field to the templateData struct.
+// Add FormData and FormErrors fields to the templateData struct.
 type templateData struct {
 	CurrentYear int
+	FormData    url.Values
+	FormErrors  map[string]string
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
 }
