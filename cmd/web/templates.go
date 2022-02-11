@@ -2,18 +2,18 @@ package main
 
 import (
 	"html/template"
-	"net/url"
 	"path/filepath"
 	"time"
 
+	"github.com/wjx0820/snippetbox/pkg/forms"
 	"github.com/wjx0820/snippetbox/pkg/models"
 )
 
-// Add FormData and FormErrors fields to the templateData struct.
+// Update the templateData fields, removing the individual FormData and
+// FormErrors fields and replacing them with a single Form field.
 type templateData struct {
 	CurrentYear int
-	FormData    url.Values
-	FormErrors  map[string]string
+	Form        *forms.Form
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
 }
