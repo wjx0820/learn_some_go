@@ -24,6 +24,7 @@ type application struct {
 	session       *sessions.Session
 	snippets      *mysql.SnippetModel
 	templateCache map[string]*template.Template
+	users         *mysql.UserModel
 }
 
 func main() {
@@ -56,13 +57,15 @@ func main() {
 	session.Lifetime = 12 * time.Hour
 	session.Secure = true // Set the Secure flag on our session cookies
 
-	// And add the session manager to our application dependencies.
+	// Initialize a mysql.UserModel instance and add it to the application
+	// dependencies.
 	app := &application{
 		errorLog:      errorLog,
 		infoLog:       infoLog,
 		session:       session,
 		snippets:      &mysql.SnippetModel{DB: db},
 		templateCache: templateCache,
+		users:         &mysql.UserModel{DB: db},
 	}
 
 	srv := &http.Server{
