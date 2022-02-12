@@ -11,6 +11,7 @@ import (
 
 // Add a new IsAuthenticated field to the templateData struct.
 type templateData struct {
+	CSRFToken       string
 	CurrentYear     int
 	Flash           string
 	Form            *forms.Form
